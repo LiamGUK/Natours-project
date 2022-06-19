@@ -1,0 +1,97 @@
+// All CSS code related to Fonts on page are stored here.
+
+body {
+    font-family: "Lato", sans-serif; /* Font-family added to body as font is only to be inherted in elements within the body tags only. Use Lato from Google font link in HTML, sans serif = backup font. */
+    font-weight: 400;
+    /*font-size: 16px; - no longer needed as size set in html element */ 
+    line-height: 1.7; /* line height 1.7 times bigger than predefined height */
+    color: $color-grey-dark;
+    /* padding 30px - changed to rem below - Adds padding border around entire web page */
+}
+
+.heading-primary {
+    color: $color-white;
+    text-transform: uppercase;
+
+    backface-visibility: hidden; /** fix for the animation shake - hides element to conceal movement hides part behind the element */
+    margin-bottom: 6rem;
+
+
+    &--main { // .heading-primary--main
+        display: block; /* Display block on both span elements to force a line break on each and display on top of each other */
+        font-size: 6rem;
+        font-weight: 400;
+        letter-spacing: 3.5rem; /* adds spacing between each letter in content - creates spaced out effect */
+    
+        animation-name: moveInLeft; /** Use animation-name on class to use keyframe animation and give name of animation attached to keyframe as value here */
+        animation-duration: 1s; /**Sets how long the animation lasts for 3s = 3 seconds */
+        animation-timing-function: ease-out ; /** specifies how animation should playout over duration of each cycle - ease-out = starts quick but ends slow */
+
+        @include respond(phone) {
+            letter-spacing: 1rem;
+            font-size: 5rem;
+        }
+    
+        /** 
+         * animation-delay: 3s;  delays animation for set amount of time before initiating 
+         * 
+         * animation-iteration-count: 3; animation is repeated by the set value amount of times
+        */
+    }
+    
+    &--sub { // .heading-primary--sub
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1.75rem;
+    
+        animation: moveInRight 1s ease-out; /** animation = short-hand method to above animation values - add name, duration and timing function in one */
+
+        @include respond(phone) {
+            letter-spacing: .5rem;
+        }
+    }
+}
+
+.header__logo:hover { /** Can also add animation to hover effects */
+    animation: grow 3s linear;
+}
+
+.heading-secondary {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block; // Ensures background colour below doesn't fill 100% width of page but only until end of H2 text.
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark); // Adds a background colour gradient effect to H2 text in heading-secondary group.
+    -webkit-background-clip: text; // Will clip the background colour and place it only where the text sits (Prefix only available for this css).
+    color: transparent; // Ensures the font color of text becomes invisble so only background colour remains visible and is displayed.
+    letter-spacing: 2px;
+    transition: all .2s;
+
+    @include respond(tab-port) {
+        font-size: 3rem;
+    }
+
+    @include respond(phone) {
+        font-size: 2.5rem;
+    }
+
+    &:hover {
+        transform: skewY(2deg) skewX(15deg); // Skew = changes the shape of the element by stating degree rotation on either the X or Y axis.
+        text-shadow: .5rem 1rem 2rem rgba($color-black, .2);
+    }
+}
+
+.heading-tertiary {
+    font-size: $default-font-size;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: $default-font-size;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}

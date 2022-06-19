@@ -1,0 +1,113 @@
+.form {
+
+    &__group:not(:last-child) { // applies CSS to all but the last child - ensures no margin is added to last form field.
+        margin-bottom: 2rem;
+    }
+
+    &__input {
+        font-size: 1.5rem;
+        font-family: inherit; // Set to inherit so that forms will auto take font family set in body element rather than declaring again.
+        color: inherit; // font color auto taken from body element.
+        padding: 1.5rem 2rem;
+        border-radius: 2px;
+        background-color: rgba($color-white, .5);
+        border: none;
+        border-bottom: 3px solid transparent; // Add border-bottom here as well so that field will always have an extra 3px at the bottom to match focus - stops focus adding extra px on click
+        width: 90%;
+        display: block; //Set to display as block to force label element below field.
+        transition: all .3s;
+
+        @include respond(tab-port) {
+            width: 100%;
+        }
+
+        &:focus { // focus targets the focus outline when form field is clicked on. Setting to none results in no colour being displayed around the field.
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($color-black, .1); // For accessibility should replace outline on focus with box shadow and border bottom so there is still some indicator on the page.
+            border-bottom: 3px solid $color-primary;
+        }
+
+        &:focus:invalid { // focus:invalid = works with required attribute and browser defaults - if field is missing required inputs will display below css properties.
+            border-bottom: 3px solid red;
+        }
+
+        &::-webkit-input-placeholder { // target the placeholder text in input elements (only currently works in chrome & Safari.
+            color: $color-grey-dark-2;
+    
+        }
+
+    }
+
+    &__label { // CSS for label text which is displayed after user clicks into form fields.
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: .7rem;
+        display: block; // Display as block in order to set margin to top of element
+        transition: all .3s;
+        transform: translateY(-6rem) translateX(-1rem); // Once user starts typing into field transform css is enabled and label is moved to this position.
+    }
+
+    &__input:placeholder-shown + &__label { // Use the sibling adjacent selector inorder to target direct sibling in group. Can use ~ selector if sibling contains div's or or other elements in between to target. Label will have to appear after input element in order to target using sibling selector.
+    // CSS properties below for placeholder text in its natural state - before user clicks into fields below css enabled.
+       opacity: 0;
+       visibility: hidden; // Set Opacity with hidden visibility as can only animate opacity with CSS
+       font-size: 1.1rem;
+       transform: translateY(-4rem) translateX(0rem);
+    }
+
+    &__radio-group {
+        width: 49%;
+        display: inline-block;
+
+        @include respond(tab-port) {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__radio-input {
+        display: none; // Original radio buttons hidden on page so that only new custom radio buttons made below will be displayed on page.
+    }
+
+    &__radio-label {
+        font-size: $default-font-size;
+        cursor: pointer;
+        position: relative;
+        padding-left: 4.5rem; // adds space between label text and custom radio element below on page.
+    }
+
+    // Custom styled radio button css here - replaces radio button default from input element.
+    &__radio-button {
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary; // Border to surround new custom radio button.
+        border-radius: 50%; // Circle shape.
+        display: inline-block; // displayed as a inline-block to give it height and width and to align next to original input elements.
+        position: absolute;
+        left: 0;
+        top: -.4rem; // positions directly next to original input radio buttons.
+
+
+        &::after { // after block used to style custom radio button selector to confirm user selection in new custom radio button.
+            content:"";
+            display: block;
+            height: 1.3rem;
+            width: 1.3rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); // Centers the element in the middle of its container - will position in middle of border css set above.
+            background-color: $color-primary;
+            opacity: 0; // set to 0 so initial state for element is invisible on page load.
+            transition: opacity .2s; // animation for opacity on radio button being 'checked'
+        }
+    }
+
+    &__radio-input:checked ~ &__radio-label &__radio-button::after { // Use the direct sibiling selector to first target sibling - can then target the child = custom radio button added (below css will be implemented for it).
+        opacity: 1; // new element will be displayed on page once radio button is selected.
+    }
+
+}
+

@@ -1,0 +1,114 @@
+.section-about {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0;
+  margin-top: -20vh; // -20vh as difference between header block (95vh) and clip path of image in bottom right corner set at 75vh - ensures grey background colour fills entire space.
+
+  @include respond(tab-port) {
+    padding: 20rem 0; // decrease in padding wrapping around all elements in section.
+  }
+}
+
+.section-features {
+  padding: 20rem 0;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(./media/nat-4.jpg);
+  background-size: cover;
+  margin-top: -10rem; // Pull section block up to cover white space and hide white background.
+
+  transform: skewY(-7deg);
+
+  @include respond(tab-port) {
+    padding: 10rem 0; // decrease in padding wrapping around all elements in section.
+  }
+
+  & > * {
+    // Targets all the direct children of the section-feature class (Not all children) - in this instance will be <div class="row"> on HTML sheet - will apply css to the row.
+    transform: skewY(
+      7deg
+    ); // will apply an opposite skew to row class so they position normally from skew of parent element section-features above. Targeting only direct child ensures that skew css isn't applied again and again to all child elements and multiply skew effect.
+  }
+}
+
+.section-tours {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0 15rem 0;
+  margin-top: -11rem;
+
+  @include respond(tab-port) {
+    padding: 20rem 0 10rem 0;
+  }
+}
+
+.section-stories {
+  padding: 15rem 0;
+  position: relative;
+
+  @include respond(tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.section-book {
+  padding: 15rem 0;
+  background-image: linear-gradient(
+    to right bottom,
+    $color-primary-light,
+    $color-primary-dark
+  );
+
+  @include respond(tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.book {
+  // Adding a degree rotation enables to create shapes using linear-gradients. Adding a 50% value indicates colour is to fill 50% of width of container.
+  background-image: linear-gradient(
+      105deg,
+      rgba($color-white, 0.9) 0%,
+      rgba($color-white, 0.9) 50%,
+      transparent 50%
+    ),
+    // add transparent value so that half of the container is not filled with gradient colour.
+    url(./media/nat-10.jpg);
+  background-size: cover;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+
+  @include respond(tab-land) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 65%,
+        transparent 65%
+      ),
+      // Change gradient size % when screen size gets smaller.
+      url(./media/nat-10.jpg);
+  }
+
+  @include respond(tab-port) {
+    background-image: linear-gradient(
+        to right,
+        rgba($color-white, 0.9) 0,
+        rgba($color-white, 0.9) 100%
+      ),
+      url(./media/nat-10.jpg);
+  }
+
+  &__form {
+    width: 50%;
+    padding: 6rem;
+
+    @include respond(tab-land) {
+      width: 65%;
+    }
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+  }
+}

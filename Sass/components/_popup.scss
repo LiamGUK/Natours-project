@@ -1,0 +1,123 @@
+.popup { 
+
+    // Background CSS of popup block (CSS for whole container)
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($color-black, .8); 
+    z-index: 9999;
+
+    opacity: 0; // Set Opacity to 0 and visibility hidden in order to animate reveal of popup - never use display none if wanting to animate with CSS.
+    visibility: hidden;
+    transition: all .4s .2s;
+
+    
+    // Use the @supports feature to check with browser if it supports css properties - below checking if browser supports below backdrop-filter and if it does will implement below css, if not will ignore it.
+    @supports(-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+        -webkit-backdrop-filter: blur(10px); 
+        backdrop-filter: blur(10px); // backdrop-filer adds a blur effect to background color - only works in Safari at present
+        background-color: rgba($color-black, .3); 
+    }
+
+
+    &__content {
+        @include center-transform;
+        width: 75%;
+        background-color: $color-white;
+        box-shadow: 0 2rem 4rem rgba($color-black, .2);
+        border-radius: 3px;
+        display: table; // Main container set to display as table for table cells below.
+        overflow: hidden; // Stops image overflowing container and keeps border-radius css visible.
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1); // Have to repeat translate from above mixin here as being declared lower this transform would override mixin and remove center positioning.
+        transition: all .5s .2s; // Delays transition by .2s to allow fade in.
+    }
+
+    &__left {
+        width: 33.3333333%;
+        display: table-cell; // Display both left and right containers as table-cells - Browser will auto give them the same height.
+        
+        @include respond(tab-port) {
+            display: flex;
+            width: 50%;
+        }
+
+    }
+
+    &__right {
+        width: 66.6666667%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+
+        @include respond(tab-port) {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+    }
+
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        -moz-column-count: 2; // generates 2 columns in container and splits content into both.
+        -moz-column-gap: 4rem; // Default for column gap - 1em (14px)
+        -moz-column-rule: 1px solid $color-grey-light-2; // border in middle of columns.
+
+        column-count: 2; // generates 2 columns in container and splits content into both.
+        column-gap: 4rem; // Default for column gap - 1em (14px)
+        column-rule: 1px solid $color-grey-light-2; // border in middle of columns.
+
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto; // auto places hypens on text that gets cut short and text breaks the viewport whitespace - will place hyphens on broken words - need to declare language code in html element - html lang="en".
+
+        @include respond(tab-port) {
+            -moz-column-count: 1;
+            column-count: 1;
+            -moz-column-rule: unset;
+            column-rule: unset;
+        }
+    }
+
+    // Open states - when popup is open
+    &:target { // Only apply css to the target (Anchor) in popup class - from HTML id (target) is popup
+        opacity: 1;
+        visibility: visible; // When anchor link with target id attached is clicked, this css is enabled resulting in popup appearing on page.
+    }
+
+    &:target &__content { // When target is activated on click, apply css to it's child element - popup__content.
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    &__close {
+
+        &:link,
+        &:visited {
+            color: $color-grey-dark;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all .3s;
+            line-height: 1;
+        }
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+
+}

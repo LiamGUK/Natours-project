@@ -1,0 +1,217 @@
+.card {
+  perspective: 150rem; // perspective = defines how far away object is from user (lower value = more intensive 3D effect). Defined in parent but it is the child elements that get perspective view.
+  -moz-perspective: 150rem; // Prefix in order to work in firefox browser.
+  position: relative;
+  height: 52rem; // Have to give same height value as child due to absolute positioning taking elements out from page flow.
+
+  &__side {
+
+    font-size: 2rem;
+    height: 52rem;
+    transition: all .8s ease;
+    position: absolute; // Position absolute so that both blocks are stacked on top of eachother.
+    top: 0;
+    left: 0;
+    width: 100%; // So cards fill their container in full
+    -webkit-backface-visibility: hidden; // prefix to work in Safari
+    backface-visibility: hidden; // hides the back portion of group of elements = card__side--back will be hidden from view.
+    border-radius: 3px;
+    overflow: hidden; // Stops the background image overlapping the rounded corners from the border radius.
+    box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    // CSS styling for back face of cards - colours etc.
+    &--back {
+      transform: rotateY(180deg); // Rotation property applied to back class so block is already rotated on page load.
+
+      &-1 {
+        background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
+      }
+
+      &-2 {
+        background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+      }
+
+      &-3 {
+        background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark);
+      }
+    }
+  }
+
+  &:hover &__side--front { // When card class is hovered = Card__side elements are transformed with rotation css Not whole group.
+    transform: rotateY(-180deg); // set to -180deg so that it moves in the opposite direction to create natural spin effect.
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0); //rotation set to 0 so on hover elements within back class are displayed normally from already applied rotation above.
+  }
+
+  // FRONT SIDE STYLING of cards
+  &__picture {
+    background-size: cover;
+    height: 23rem; // Set the height so that the image fills the space.
+    background-blend-mode: screen ; // Background-blend mode allows to apply colour blend filter with image and gradient combo (only works for Firefox, chrome and Safari).
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    // seting border radius again here due to clip-path css affecting overflow hidden property - a Manual fix.
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    &--1 {
+      background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark), url(nat-5.jpg);
+
+    }
+
+    &--2 {
+      background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark), url(nat-6.jpg);
+
+    }
+
+    &--3 {
+      background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark), url(nat-7.jpg);
+    }
+
+  }
+
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: $color-white;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    width: 75%;
+  }
+
+  &__heading-span {
+      padding: 1rem 1.5rem;
+      -webkit-box-decoration-break: clone; // Each box fragment is rendered independently with the specified border, padding, and margin wrapping each fragment - if text is cut off due to limited space, end cut off point is cloned to match otherside of element so it looks like a natural line break.
+      box-decoration-break: clone;
+
+    &--1 {
+      background-image: linear-gradient(to right bottom, 
+      rgba($color-secondary-light, .85), 
+      rgba($color-secondary-dark, .85));
+    }
+
+    &--2 {
+      background-image: linear-gradient(to right bottom, 
+      rgba($color-primary-light, .85), 
+      rgba($color-primary-dark, .85));
+    }
+
+    &--3 {
+      background-image: linear-gradient(to right bottom, 
+      rgba($color-tertiary-light, .85), 
+      rgba($color-tertiary-dark, .85));
+    }
+
+  }
+
+  &__details {
+    padding: 3rem;
+
+    ul {
+
+      list-style: none;
+      width: 80%;
+      margin: 0 auto;
+
+      li {
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 1rem;
+
+        &:not(:last-child) { // Ensures that it adds border css to the bottom of each element all except the last child.
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+
+  &__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); // Centers the block in the middle of the container.
+    width: 90%;
+    text-align: center;
+  }
+
+  &__price-box {
+    text-align: center;
+    color: $color-white;
+    margin-bottom: 8rem;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 100;
+
+  }
+
+}
+
+//@include respond(tab-port) {
+  @media only screen and (max-width: 56.25em),
+  only screen and (hover:none) { // add hover:none as a media query when wanting to apply css to touch devices - hover effect on cards will now not apply to touch screen devices.
+  .card {
+    height: auto; // Height value no longer required for media query - set to auto.
+    border-radius: 3px; // border radius moved to entire card element to apply effect on entire container instead.
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+  
+    &__side {
+      height: auto;
+      position: relative; // in smaller screen sizes no longer need both card sides placed ontop of each other, positioned relative to be stacked on top of eachother.
+      box-shadow: none;
+      
+  
+      &--back {
+        transform: rotateY(0); // Rotation set to 0 so back face of card is displaying normally.
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%); // Use clip path on the back card to match clip path effect set on front card.
+      }
+    }
+  
+    &:hover &__side--front { 
+      transform: rotateY(0); // set to 0 so doesn't rotate on hover.
+    }
+
+    &__details {
+      padding: 0 1rem;
+    }
+
+    &__cta {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: translate(0);
+      width: 100%;
+      padding: 7rem 4rem 4rem;
+    }
+  
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+  
+    &__price-only {
+      font-size: 1.4rem;
+    }
+  
+    &__price-value {
+      font-size: 4rem;
+    }
+  }  
+  
+}

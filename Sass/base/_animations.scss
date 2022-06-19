@@ -1,0 +1,59 @@
+/***************** ANIMATIONS *******************/
+
+// All animations applied to site will be stored here.
+
+@keyframes moveInLeft { /* Use keyframes element for animations - assign an animation a name to target (e.g. moveInLeft). Control different points of the animation by setting under a % - 0% = start of animation 100% = end of animation */
+    0% {
+        opacity: 0; /* opacity set to 0 at start of animation so element is invisible on load */
+        transform: translateX(-10rem); /**Use translateX to position only horizontally */
+    }
+
+    80% {
+        transform: translateX(1rem);
+    }
+
+    100% {
+        opacity: 1; /** By end of animation element is fully visible with 1 opacity */
+        transform: translate(0); /**translate set to 0 to set position where it is currently positioned and set on page already */
+    }
+}
+
+@keyframes moveInRight { 
+    0% {
+        opacity: 0; 
+        transform: translateX(10rem); 
+    }
+
+    80% {
+        transform: translateX(-1rem);
+    }
+
+    100% {
+        opacity: 1; 
+        transform: translate(0); 
+    }
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(30);
+    }
+}
+
+@keyframes moveInBottom { 
+    0% {
+        opacity: 0; 
+        transform: translateY(3rem); 
+    }
+
+    100% {
+        opacity: 1; 
+        transform: translate(0); 
+    }
+}

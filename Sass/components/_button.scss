@@ -1,0 +1,99 @@
+// Individual components that makeup site stored here - All CSS sharing button components stored here.
+
+.btn {
+    &, // Ensures below css will be applied to all buttons with the btn class added.
+    &:link,
+    &:visited { /** link pseudo class - defines class as a link - how it currently appears on the page. visited = condition after action has been made */
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        border-radius: 10rem;
+        transition: all .2s; /** applies transition properties to all hover, active and visited elements associated with a 2 second duration */
+        position: relative; /** Parent element set to relative for below clone button positioned absolute */
+        font-size: $default-font-size;
+
+        // CSS for button in form element
+        border: none;
+        cursor: pointer;
+    }
+
+    &:hover { 
+        transform: translateY(-0.3rem); /** On hover will move the element up by 3px in relation to link position */
+        box-shadow: 0 1rem 2rem rgba($color-black, .2); /** 0 on x axis 10px shadow applied to Y axis 20px blur added and colour of shadow = black with .2 opacity */
+
+        &::after { // btn:hover::after
+            /** Adds a hover effect to a new element which is to appear after the original button on page */
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0; /** hover effect both enlargers and fades out to invisible during transition */
+        }
+    }
+
+    &:active, // apply focus here as well so that when user has selected button - below css will only be applied and not the default browser outline.
+    &:focus { /** effect when element is clicked */
+        outline: none;
+        transform: translateY(-0.1rem); /** element moves down to -1px in relation to link position when clicked on */
+        box-shadow: 0 0.5rem 1rem rgba($color-black, .2); /** reduces shadow on click to appear smaller */
+    }
+
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark;
+
+        &::after { // .btn--white::after.
+            background-color: $color-white;
+        }
+    }
+
+    &--green {
+        background-color: $color-primary;
+        color: $color-white;
+
+        &::after { // .btn--green::after.
+            background-color: $color-primary;
+        }
+    }
+
+    &::after { /** creating another element to mimic the existing button to add a expanding out effect - a hidden clone of existing button is added */
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%; /** becomes a child of the existing button element - setting to 100% will simply copy and apply same width and height set on original button */
+        border-radius: 10rem;
+        position: absolute; /** set to absolute to hide directly behind parent element */
+        top: 0;
+        left: 0;
+        z-index: -1; /** places the element behind the parent - lower layer down */
+        transition: all .4s;
+    }
+
+    &--animated {
+        animation: moveInBottom .5s ease-out .75s; /** animation for button - contains animation name, duration, ease-out transition and delay of animation */
+        animation-fill-mode: backwards; /** Applies the 0% status of the set animation in keyframes before the animation starts on the page */
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-primary;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary; // adding own border line to bottom allows to input padding and create space.
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, .15);
+        transform: translateY(-2px); // To move the button up on hover.
+    }
+
+    &:active {
+        box-shadow: 0 .5rem 1rem rgba($color-black, .15);
+        transform: translateY(0);
+    }
+}

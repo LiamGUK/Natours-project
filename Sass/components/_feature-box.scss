@@ -1,0 +1,31 @@
+.feature-box { // CSS for white box wrapping icon and text.
+background-color: rgba($color-white, .8);
+font-size: 1.5rem; // All child elements of feature-box class with inherit this font-size.
+padding: 2.5rem;
+text-align: center;
+border-radius: 3px;
+box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+transition: all .3s;
+
+@include respond(tab-port) {
+    padding: 2rem;
+}
+
+    &__icon {
+        font-size: 6rem; // To alter size of icons use font-size property to make icon bigger or smaller on page.
+        margin-bottom: .5rem;
+        display: inline-block; // Ensures background colour below doesn't fill 100% width of page but only icon area.
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark); // Adds a background colour gradient effect to icon.
+    -webkit-background-clip: text; // Will clip the background colour and place it only where the icon sits (Prefix only available for this css).
+    color: transparent; // Ensures the color of icon becomes invisble so only background colour remains visible and is displayed.
+
+        @include respond(tab-port) {
+            margin-bottom: 0;
+        }
+    }
+
+    &:hover {
+        transform: translateY(-1.5rem) scale(1.03); // on hover box will move up slightly on page and get larger.
+    }
+
+}

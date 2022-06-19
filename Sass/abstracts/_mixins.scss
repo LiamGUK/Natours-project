@@ -1,0 +1,68 @@
+// clearfix mixin for floats
+@mixin clearfix {
+  &::after {
+    content:"";
+    display: table;
+    clear: both;
+  }
+}
+
+// Mixin for centering elements in middle of container.
+@mixin center-transform {
+  position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+}
+
+
+// MEDIA QUERY MANAGER
+/*
+Pixel size ranges
+
+0 - 600px = Phone
+
+600 - 900px = Tablet (portrait)
+
+900px - 1200px = Tablet (Landscape)
+
+1200px - 1800px = Normal styles apply
+
+1800px + = Big screens (Desktop)
+
+*/
+
+/*
+ORDER: base + typography > general layout + grid > page layout > componenets.
+*/
+
+// Mixin media query for one resolution type
+@mixin respond-phone {
+  @media (max-width: 600px) { @content }; // @content = allows to parse a block of code into a mixin - only need to call mixin and add css property inside and will auto inherit media query.
+}
+
+/*
+$breakpoint argument choices:
+-Phone
+-tab-port
+-tab-land
+-big-desktop
+*/
+
+// Can use arguments in mixin to combine different sizes into one large media query mixin.
+
+// 1em = 16px - Use em units in media queries as better compatile than rems
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone { // Can use 'if' in Sass to pick values through boolean logic - determine if its true will apply code.
+    @media only screen and (max-width: 37.5em) { @content }; // 600 / 16 = 37.5 (600px)
+  }
+  @if $breakpoint == tab-port { 
+    @media only screen and (max-width: 56.25em) { @content }; // 900 / 16 = 56.25 (900px)
+  }
+  @if $breakpoint == tab-land { 
+    @media only screen and (max-width: 75em) { @content }; // 1200 / 16 = 75 (1200px)
+  }
+  @if $breakpoint == big-desktop { // Set to min-width here as needs to apply for sizes 1800px and above - min-width = anything below this will not apply css.
+    @media only screen and (min-width: 112.5em) { @content }; // 1800 / 16 = 112.5 (1800px)
+  } // @media only screen = media query will only apply to screens.
+}

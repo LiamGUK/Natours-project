@@ -1,0 +1,17 @@
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%; // Height and width set to 100% to match values set in its parent.
+  width: 100%;
+  z-index: -1;
+  opacity: .15; // makes the video container more transparent so that all elements can be seen more clearly on top of video container.
+  overflow: hidden; // Hides any child element overflowing its container - edges of video below will be clipped as to enure it doesn't expand outside the container edges.
+
+  &__content {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; // ensures that the video element fully covers it's parent container - cover ensures it maintains it's aspect ratio.
+
+  }
+}

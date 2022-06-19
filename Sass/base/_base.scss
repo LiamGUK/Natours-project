@@ -1,0 +1,56 @@
+// All partial SASS files start with a underscore '_' - Partial files will then be linked to the main SASS file.
+
+// Base.scss file will hold all CSS related to web page structure - elements targeting DOM
+
+/* Use universal selector = '*' to select all elements on page to do a full CSS reset on page - Alternative to using Normalise CSS - include the before & after psuedo elements to ensure they inherit the global reset*/
+*,
+*::after,
+*::before {
+    margin: 0;  /* adds 0 margin and padding to all elements to start with a clean page */
+    padding: 0;
+    box-sizing: inherit; /* Ensures every element on page will auto inherit the border-box set within the body element */
+}
+
+html { /** Set the root font-size - assigned to html element - allows to assign rem units to other elements in code for responsive values - set as a % to avoid overriding browser font-size completely */
+    // This defines what 1rem is
+    font-size: 62.5%; /** 10px/16px(browser default) = 0.625 - set to 10px as 1rem = 10px */
+
+    /*
+    @include respond-phone { // Call media query mixin here and will auto inherit and use pixel size stated in media query. To use if calling just one media query.
+        font-size: 50%;
+    }
+    */
+
+    /* Phone argument not required here as would apply same value as tab-port mixin below.
+    @include respond(phone) { // add an argument to mixin name to determine which value to choose from if statement.
+        font-size: 50%;
+    }
+    */
+
+    @include respond(tab-land) { // width < 1200px - tab-land applying a higher pixel size = needs to be be placed first for below 600px value to then kick in.
+        font-size: 56.25%; // 1rem = 9px 9/16 = 56.25%
+    }
+
+    @include respond(tab-port) { // width < 900px
+        font-size: 50%; // 1rem = 8px 8/16 = 50%
+    }
+
+    @include respond(big-desktop) { 
+        font-size: 75%; // 1 rem = 12px 12/16 = 75%
+    }
+}
+
+
+body {
+    box-sizing: border-box; /* Borders and padding no longer added to total width or total height */
+    padding: 3rem; /* 10px from font-size divided by 30px = 3rem - Padding to apply border around page */
+
+    @include respond(tab-port) { // width < 900px
+       padding: 0; // Removes padding border around page.
+    }
+}
+
+::selection { // Selection psuedo element - for css to apply to highlighted text with mouse cursor on page
+    background-color: $color-primary;
+    color: $color-white; // When highlighting any text on the page with mouse will apply a green background colour and change the font to white.
+}

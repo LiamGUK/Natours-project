@@ -1,0 +1,58 @@
+
+.header {
+    height: 85vh; /* Height of header element should be 95% of viewport height (screen) */
+    background-image: linear-gradient(  /* Can combine two layer background images (separate with a comma) use linear gradient to add a colour overlay ontop of image - determine direction of colour flow by using to right for colour to flow towards to the right of screen - add bottom in as well for a diagonal direction */
+        to right bottom, 
+        rgba($color-primary-light, 0.8), /* Combine SASS variable with opacity value from original rgba code (0.8) to make colour overlay transparent on image */
+        rgba($color-primary-dark, 0.8)), 
+        url(./media/hero-small.jpg); 
+    background-size: cover; /* Whatever width of viewport or element - always try to fit element inside of box */
+    background-position: top; /* ensures top of image always stays at top of container at all screen sizes */
+
+    position: relative; /* set the header container to position relative for the absolute position of the logo image below */
+
+    // Checking browser if supports clip-path css - don't need to state full polygon values in support check - only need to put any value - below code will do the rest
+    @supports (clip-path: polygon(0 0)) or (-webit-clip-path: polygon(0 0)) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        clip-path: polygon(/*corner 1*/0 0,/*corner 2*/ 100% 0,/*corner 3*/ 100% 75vh,/*corner 4*/ 0 100%); /* Clip-path specifys area of image or element that should be visible on page - combine with polygon function to add in co-ordinates (x and y) of area of image to only show. Specify height and width of 4 corners of element to determine what to clip out e.g. 0 = no change 100% = 100% of width/height 50% = 50% of height/width */
+        height: 95vh;
+    }
+
+    // Use min-resolution for background css images - 192dpi is the resoluton of retina desplay screens - When resolution is higher than 192dpi and higher than 600px (600/16 = 37.5) this code will be applied.
+    @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em), 
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em), // min-device-pixel-ratio = prefix for safari browser as doesn't understand min-resolution property.
+    only screen and (min-width: 125em) { // Below css code will only be activated at 2000px (2000/16 = 125) and above, anything below 2000px will ignore this media query - Use comma to apply 'or' operator so that it targets both sets.
+        background-image: linear-gradient(
+        to right bottom, 
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)), 
+        url(./media/hero.jpg); // On the larger screen sizes and screen sizes larger than 600px the larger 'hero' image file will be used - on small screens 'hero-small' set above will be used instead.
+    }
+
+    @include respond(phone) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%); // Reducing the shape of background gradient - less step incline on mobile.
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+
+    /* Nest class's with similar class names - & will copy from parent class in this case .header - include other class name text to complete class name */
+    &__logo-box { // .header__logo-box
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+
+    &__logo { // .header__logo
+        /* height: 35px;  Width will auto be configured by browser using height value */
+        height: 3.5rem; /* changed to rem based on 10px root font-size - 35/10 = 3.5*/
+     }
+     
+     &__text-box { // .header__text-box
+         /* position absolute and apply value's to to position using top, left, right or bottom. Add transform with translate to center the container in the middle of the page and keep it in the middle on all screen sizes */
+         position: absolute;
+         top: 40%;
+         left: 50%;
+         transform: translate(-50%, -50%); /* top and left values are % in relation to the parent element while translate position's at -50% in relation to the element itself which allows to center in the middle */
+     
+         text-align: center; /** centers all text elements in the middle of the container - button included */
+     }
+}

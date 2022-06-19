@@ -1,0 +1,174 @@
+.navigation {
+
+    &__checkbox {
+        display: none; // Check box input hidden as not required on page - label of input will act as click input of element.
+    }
+
+    // Label CSS for checkbox
+    &__button {
+        background-color: $color-white;
+        height: 7rem; // slightly higher width and height to ensure it covers the background css below.
+        width: 7rem;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        border-radius: 50%; // Circle shape
+        z-index: 2000; // Give high z-index so that it is placed on highest layer on page.
+        box-shadow: 0 1rem 3rem rgba($color-black, .1);
+        text-align: center; // centers all elements to the middle of the container - (icon is centered in middle of circle.)
+        cursor: pointer;
+
+        @include respond(tab-port) {
+            top: 4rem;
+        right: 4rem;
+        }
+
+        @include respond(phone) {
+            top: 3rem;
+            right: 3rem;
+        }
+
+    }
+
+    // Empty Div below label - Icon for navigation button
+    &__background {
+        height: 6rem; // height and width the same = Circle
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 6.5rem;
+        background-image: radial-gradient($color-primary-light, $color-primary-dark); // radial gradient - colours start from middle of element and work their way outside towards edges.
+        z-index: 1000; 
+        transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1); // Cubic-bezier = custom animation tranistion speed. number values control how fast and slow animation is acted out over time.
+
+        @include respond(tab-port) {
+            top: 4.5rem;
+            right: 4.5rem;
+        }
+
+        @include respond(phone) {
+            top: 3.5rem;
+            right: 3.5rem;
+        }
+
+        // transform: scale(80); // To increase the size of the background image above so it fills the entire page and overlaps everything. (For testing purposes - disabled to be hidden on page).
+    }
+
+    // Container for links which display once label has been clicked - Will fill the entire page.
+    &__nav {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1500; // Needs to have a higher z-index than nav__background above so that it positions above it on page.
+
+        opacity: 0; // Opacity set to 0 to hide container on page
+        width: 0; // Width set to 0 so that links are not clickable 0 fully hides on page.
+        transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+    }
+
+    // CSS for link list in navigation container - centered and positioned in middle of page.
+    &__list {
+        @include center-transform; // Mixin for css center element in container (Absolute positioning).
+        list-style: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    &__item {
+        margin: 1rem;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+        display: inline-block;    
+        font-size: 3rem;
+        font-weight: 300;
+        padding: 1rem 2rem;
+        color: $color-white;
+        text-decoration: none;
+        text-transform: uppercase;
+        background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+        background-size: 220%; // Set a % on background size to position background image colour outside of container - only colour set at 0% in linear gradient will be visible. Hover effect will decrease background size for other colours set in linear-gradient to completely fill the block.
+        transition: all .4s;
+        }
+
+        span {
+            margin-right: 1.5rem;
+            display: inline-block;
+        }
+   
+        &:hover,
+        &:active {
+            background-position: 100%; // Background position will move the linear-gradiant block and place it to cover the entire container and overlap link text.
+            color: $color-primary;
+            transform: translateX(1rem);
+        }
+    }
+
+    // CSS for when checkbox input is clicked - below css is activated.
+    &__checkbox:checked ~ &__background { // use the general sibling selector '~' to target the next div after the label.
+        transform: scale(80); // To increase the size of the background image above so it fills the entire page and overlaps everything.
+    }
+
+    &__checkbox:checked ~ &__nav { // CSS for navigation block is also activated on checkbox click.
+        opacity: 1; // Opacity set to 1 to show container on page with links
+        width: 100%; // Width set to 100% so that container fills the full width of the page.
+    }
+
+    // CSS for Icon inside label button - used with checkbox.
+    &__icon {
+
+        position: relative;
+        margin-top: 3.5rem; // pushes elements down into middle of circle - combined with text-align above.
+
+        &,
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-grey-dark-3;
+            display: inline-block;
+        }
+
+        // 2 lines that appear before and after above element - forms 3 horizontal lines on top of each other.
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all .2s;
+        }
+
+        &::before { top: -.8rem; }
+        &::after { top: .8rem; }
+
+    }
+
+    &__button:hover &__icon::before {
+        top: -1rem;
+    }
+
+    &__button:hover &__icon::after {
+        top: 1rem;
+    }
+
+    // When checkbox is clicked target direct sibling '+' (label) and target its child (span elements with before & after elemenets)
+    &__checkbox:checked + &__button &__icon {
+        background-color: transparent; // when clicked element will become invisible on page leaving only before and after elements on page.
+    }
+
+    // When checkbox is clicked both before and after elements are rotated to form a cross and are moved back to the top to be placed in the middle.
+    &__checkbox:checked + &__button &__icon::before {
+        top: 0;
+        transform: rotate(135deg); // 180 degrees - 45 degrees = 135 - will give a smoother animation effect on rotation.
+    }
+
+    &__checkbox:checked + &__button &__icon::after {
+        top: 0;
+        transform: rotate(-135deg);
+    }
+
+}
