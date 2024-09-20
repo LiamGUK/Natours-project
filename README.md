@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5a2cb843-cbf4-4332-8f96-08aacae3c318/deploy-status)](https://app.netlify.com/sites/natours-practice-project/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5a2cb843-cbf4-4332-8f96-08aacae3c318/deploy-status?branch=main)](https://app.netlify.com/sites/natours-practice-project/deploys)
 
 # Natours-project
 
